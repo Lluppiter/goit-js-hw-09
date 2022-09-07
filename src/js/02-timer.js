@@ -40,6 +40,7 @@ function changeStandardTime(day, hour, minute, second) {
   minute.textContent = convertMs(differenceDates).minutes;
   second.textContent = convertMs(differenceDates).seconds;
 }
+let differenceDates;
 const options = {
   enableTime: true,
   time_24hr: true,
@@ -59,7 +60,7 @@ const options = {
 flatpickr(calendar, options);
 
 startButton.addEventListener('click', event => {
-  countdown = setInterval(() => {
+  setInterval(() => {
     differenceDates -= 1000;
     changeStandardTime(days, hours, minutes, seconds);
     addLeadingZero(days, hours, minutes, seconds);
