@@ -51,12 +51,13 @@ const options = {
       Notiflix.Notify.failure('Please choose a date in the future');
     } else {
       startButton.removeAttribute('disabled', '');
-      changeStandardTime(days, hours, minutes, seconds);
-      addLeadingZero(days, hours, minutes, seconds);
+      // changeStandardTime(days, hours, minutes, seconds);
+      // addLeadingZero(days, hours, minutes, seconds);
     }
   },
 };
 flatpickr(calendar, options);
+
 startButton.addEventListener('click', event => {
   countdown = setInterval(() => {
     differenceDates -= 1000;
