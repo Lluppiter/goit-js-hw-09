@@ -58,11 +58,16 @@ const options = {
   },
 };
 flatpickr(calendar, options);
-
+let countdown;
 startButton.addEventListener('click', event => {
-  setInterval(() => {
-    differenceDates -= 1000;
-    changeStandardTime(days, hours, minutes, seconds);
-    addLeadingZero(days, hours, minutes, seconds);
+  countdown = setInterval(() => {
+    if (differenceDates <= 1) {
+      Notiflix.Notify.success('Countdown finished');
+      clearInterval(countdown);
+    } else {
+      differenceDates -= 1000;
+      changeStandardTime(days, hours, minutes, seconds);
+      addLeadingZero(days, hours, minutes, seconds);
+    }
   }, 1000);
 });
