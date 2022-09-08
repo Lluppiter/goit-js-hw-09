@@ -12,15 +12,14 @@ function createPromise(position, delay) {
   });
 }
 const form = document.querySelector('form');
-const amount = document.querySelector('input[name="amount"]');
-const firstDelay = document.querySelector('input[name="delay"]');
-const secondDelay = document.querySelector('input[name="step"]');
-
 form.addEventListener('submit', event => {
   event.preventDefault();
-  let delay = parseInt(firstDelay.value);
+  const {
+    elements: { amount, delay, step },
+  } = event.currentTarget;
+  let firstDelay = parseInt(delay.value);
   for (let index = 1; index <= amount.value; index++) {
-    createPromise(index, delay)
+    createPromise(index, firstDelay)
       .then(({ position, delay }) => {
         Notiflix.Notify.success(
           `✅ Fulfilled promise ${position} in ${delay}ms`
@@ -31,6 +30,6 @@ form.addEventListener('submit', event => {
           `❌ Rejected promise ${position} in ${delay}ms`
         );
       });
-    delay += parseInt(secondDelay.value);
+    firstDelay += parseInt(step.value);
   }
 });

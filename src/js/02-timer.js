@@ -4,11 +4,8 @@ import Notiflix from 'notiflix';
 
 const calendar = document.querySelector('#datetime-picker');
 const startButton = document.querySelector('button[data-start]');
-const days = document.querySelector('span[data-days]');
-const hours = document.querySelector('span[data-hours]');
-const minutes = document.querySelector('span[data-minutes]');
-const seconds = document.querySelector('span[data-seconds]');
 startButton.setAttribute('disabled', '');
+const numbers = document.querySelectorAll('.value');
 
 function convertMs(ms) {
   // Number of milliseconds per unit of time
@@ -28,17 +25,16 @@ function convertMs(ms) {
 
   return { days, hours, minutes, seconds };
 }
-function addLeadingZero(day, hour, minute, second) {
-  day.textContent = day.textContent.padStart(2, '0');
-  hour.textContent = hour.textContent.padStart(2, '0');
-  minute.textContent = minute.textContent.padStart(2, '0');
-  second.textContent = second.textContent.padStart(2, '0');
+function addLeadingZero(numbers) {
+  for (let number of numbers) {
+    number.textContent = number.textContent.padStart(2, '0');
+  }
 }
-function changeStandardTime(day, hour, minute, second) {
-  day.textContent = convertMs(differenceDates).days;
-  hour.textContent = convertMs(differenceDates).hours;
-  minute.textContent = convertMs(differenceDates).minutes;
-  second.textContent = convertMs(differenceDates).seconds;
+function changeStandardTime(differenceDates) {
+  const deltaDate = convertMs(differenceDates);
+  for (key in deltaDate) {
+    document.querySelector(`span[data-${key}]`).textContent = deltaDate[key];
+  }
 }
 let differenceDates;
 const options = {
@@ -51,23 +47,23 @@ const options = {
     if (differenceDates < 0) {
       Notiflix.Notify.failure('Please choose a date in the future');
     } else {
-      startButton.removeAttribute('disabled', '');
-      // changeStandardTime(days, hours, minutes, seconds);
-      // addLeadingZero(days, hours, minutes, seconds);
+      startButton.removeAttribute('disabled');
     }
   },
 };
 flatpickr(calendar, options);
+
 let countdown;
 startButton.addEventListener('click', event => {
   countdown = setInterval(() => {
-    if (differenceDates <= 1) {
+    if (differenceDates <= 1000) {
       Notiflix.Notify.success('Countdown finished');
       clearInterval(countdown);
     } else {
+      startButton.setAttribute('disabled', '');
       differenceDates -= 1000;
-      changeStandardTime(days, hours, minutes, seconds);
-      addLeadingZero(days, hours, minutes, seconds);
+      changeStandardTime(differenceDates);
+      addLeadingZero(numbers);
     }
   }, 1000);
 });
