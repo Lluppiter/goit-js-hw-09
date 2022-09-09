@@ -25,15 +25,12 @@ function convertMs(ms) {
 
   return { days, hours, minutes, seconds };
 }
-function addLeadingZero(numbers) {
-  for (let number of numbers) {
-    number.textContent = number.textContent.padStart(2, '0');
-  }
-}
 function changeStandardTime(differenceDates) {
   const deltaDate = convertMs(differenceDates);
   for (key in deltaDate) {
-    document.querySelector(`span[data-${key}]`).textContent = deltaDate[key];
+    document.querySelector(`span[data-${key}]`).textContent = String(
+      deltaDate[key]
+    ).padStart(2, '0');
   }
 }
 let differenceDates;
@@ -63,7 +60,6 @@ startButton.addEventListener('click', event => {
       startButton.setAttribute('disabled', '');
       differenceDates -= 1000;
       changeStandardTime(differenceDates);
-      addLeadingZero(numbers);
     }
   }, 1000);
 });
