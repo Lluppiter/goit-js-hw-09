@@ -49,9 +49,8 @@ const options = {
 };
 flatpickr(calendar, options);
 
-let countdown;
 startButton.addEventListener('click', event => {
-  countdown = setInterval(() => {
+  const countdown = setInterval(() => {
     if (differenceDates <= 1000) {
       Notiflix.Notify.success('Countdown finished');
       clearInterval(countdown);
