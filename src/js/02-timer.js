@@ -26,7 +26,7 @@ function convertMs(ms) {
 }
 function changeStandardTime(differenceDates) {
   const deltaDate = convertMs(differenceDates);
-  for (key in deltaDate) {
+  for (let key in deltaDate) {
     document.querySelector(`span[data-${key}]`).textContent = String(
       deltaDate[key]
     ).padStart(2, '0');
