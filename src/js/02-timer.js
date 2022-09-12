@@ -5,7 +5,6 @@ import Notiflix from 'notiflix';
 const calendar = document.querySelector('#datetime-picker');
 const startButton = document.querySelector('button[data-start]');
 startButton.setAttribute('disabled', '');
-const numbers = document.querySelectorAll('.value');
 
 function convertMs(ms) {
   // Number of milliseconds per unit of time
